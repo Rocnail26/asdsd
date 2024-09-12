@@ -1,8 +1,9 @@
 import { z } from "zod";
-import { ResidenceTypeModel } from "../db/zod";
+import { ResidenceTypeSchema } from "../db/zod";
 
 
-const baseSchema = ResidenceTypeModel
+
+const baseSchema = ResidenceTypeSchema
 
 export const insertResidenceTypeParams = baseSchema.omit({
 id:true,
