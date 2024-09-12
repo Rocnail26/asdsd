@@ -9,13 +9,12 @@ datasource db {
 }
 
 generator zod {
-  provider       = "zod-prisma"
+  provider       = "zod-prisma-types"
   output         = "../src/db/zod" 
-  relationModel         = true
-  modelCase             = "camelCase"
-  modelSuffix           = "Schema"
-  useDecimalJs          = true
-  prismaJsonNullability = true
+  createInputTypes                 = false // default is true
+  addInputTypeValidation           = false // default is true
+  addIncludeType                   = false // default is true
+  addSelectType                    = false 
 }
 
 
