@@ -1,0 +1,191 @@
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["omitApi"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator zod {
+  provider       = "zod-prisma-types"
+  output         = "../src/db/zod" 
+}
+
+
+model Community {
+  id              String       @id @default(uuid())
+  title           String
+  address         String
+
+  Residence       Residence[]
+  Provider        Provider[]
+  User            User[]
+  Account         Account[]
+  ResidenceType   ResidenceType[]
+}
+
+
+model User {
+  id              String       @id @default(uuid())
+  userName        String
+  email           String       @unique
+  password        String?
+  identification  String
+  firstName       String
+  lastName        String
+  phone           String
+  isVerified      Boolean?     @default(false)
+  isActive        Boolean?     @default(false)
+  community_id    String       @default("1")
+  role_id         Int
+  residence_id    String?     
+
+  Community       Community     @relation(fields: [community_id], references: [id])
+  Role            Role?        @relation(fields: [role_id], references: [id])
+  paymentsCreated Payment[]    @relation("createdBy")
+  paymentsMade    Payment[]    @relation("paymentBy")
+  Residence       Residence[]
+  ResidentIn      Residence?   @relation("resident",fields: [residence_id],references: [id])
+}
+
+
+
+
+
+model Residence {
+  id              String       @id @default(uuid())
+  title           String
+  owner_id        String?      
+  community_id     String       
+  contacts        Json?
+  residenceType_id Int   
+
+  Owner           User?       @relation(fields: [owner_id], references: [id])
+  Community       Community     @relation(fields: [community_id], references: [id])
+  ResidenceType   ResidenceType @relation(fields: [residenceType_id], references: [id])
+  ParkingSlot     ParkingSlot[]
+  Expense         Expense[]
+  Resident        User[]     @relation("resident")
+}
+
+model ParkingSlot {
+  id           String     @id @default(uuid())
+  number       Int
+  residence_id String     
+
+  Residence    Residence  @relation(fields: [residence_id], references: [id])
+}
+
+
+
+model ResidenceType {
+  id           Int           @id @default(autoincrement())
+  title        String
+  description  String
+  community_id String
+
+  Residence    Residence[]
+  ExpenseType  ExpenseType[]
+  Community    Community     @relation(fields:[community_id],references:[id])
+}
+
+model Provider {
+  id           String       @id @default(uuid())
+  title        String
+  contactName  String
+  description  String
+  phone        String
+  email        String?
+  address      String?
+  website      String?
+  active       Boolean
+  community_id  String       
+
+  Community     Community     @relation(fields: [community_id], references: [id])
+  Cashout      Cashout[]
+}
+
+
+
+model Role {
+  id           Int           @id @default(autoincrement())
+  title        String
+  description  String
+  modules      String
+  User         User[]
+}
+
+model Expense {
+  id               String      @id @default(uuid())
+  title            String
+  residence_id     String      
+  emitingDate      DateTime    @db.Date
+  expireDate       DateTime    @db.Date
+  status           String
+  expenseType_id   Int
+  payment_id       String
+
+  Residence        Residence   @relation(fields: [residence_id], references: [id])
+  ExpenseType      ExpenseType @relation(fields: [expenseType_id], references: [id])
+  Payment          Payment     @relation(fields: [payment_id], references: [id])
+}
+
+model Payment {
+  id              String      @id @default(uuid())
+  title           String
+  description     String
+  registerDate    DateTime    @db.Date
+  amount          Decimal     @db.Decimal(8, 2)
+  owner_id        String        
+  voucherImage    String
+  isEmailSend       Boolean
+  account_id      String      
+  created_by      String      
+  
+ 
+  Expense         Expense[]
+  User           User        @relation("paymentBy",fields: [owner_id], references: [id])
+  Account         Account     @relation(fields: [account_id], references: [id])
+  Admin            User        @relation("createdBy", fields: [created_by], references: [id])
+}
+
+model Cashout {
+  id              String      @id @default(uuid())
+  title           String
+  description     String
+  provider_id     String      
+  amount          Decimal     @db.Decimal(8, 2)
+  billImage       String
+  account_id      String      
+  status          String
+  registerDate    DateTime    @db.Date
+
+  Provider        Provider    @relation(fields: [provider_id], references: [id])
+  Account         Account     @relation(fields: [account_id], references: [id])
+}
+
+model ExpenseType {
+  id              Int           @id @default(autoincrement())
+  title           String
+  value           Int
+  residenceType_id Int       
+
+  ResidenceType   ResidenceType  @relation(fields: [residenceType_id], references: [id])
+  Expense         Expense[]
+}
+
+
+model Account {
+  id              String       @id @default(uuid())
+  title           String
+  description     String
+  active          Boolean
+  community_id    String       
+  balance         BigInt
+
+  Community       Community     @relation(fields: [community_id], references: [id])
+  Payment         Payment[]
+  Cashout         Cashout[]
+}
