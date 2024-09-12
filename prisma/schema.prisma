@@ -9,8 +9,13 @@ datasource db {
 }
 
 generator zod {
-  provider       = "zod-prisma-types"
+  provider       = "zod-prisma"
   output         = "../src/db/zod" 
+  relationModel         = true
+  modelCase             = "camelCase"
+  modelSuffix           = "Schema"
+  useDecimalJs          = true
+  prismaJsonNullability = true
 }
 
 
@@ -44,8 +49,8 @@ model User {
 
   Community       Community     @relation(fields: [community_id], references: [id])
   Role            Role?        @relation(fields: [role_id], references: [id])
-  paymentsCreated Payment[]    @relation("createdBy")
-  paymentsMade    Payment[]    @relation("paymentBy")
+  PaymentsCreated Payment[]    @relation("createdBy")
+  PaymentsMade    Payment[]    @relation("paymentBy")
   Residence       Residence[]
   ResidentIn      Residence?   @relation("resident",fields: [residence_id],references: [id])
 }

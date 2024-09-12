@@ -18,7 +18,8 @@
     "@types/node": "^22.5.1",
     "rimraf": "^6.0.1",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^5.5.4"
+    "typescript": "^5.5.4",
+    "zod-prisma": "^0.5.4"
   },
   "dependencies": {
     "@prisma/client": "^5.19.0",
@@ -28,7 +29,6 @@
     "jsonwebtoken": "^9.0.2",
     "prisma": "^5.19.0",
     "resend": "^4.0.0",
-    "zod": "^3.23.8",
-    "zod-prisma-types": "^3.1.8"
+    "zod": "^3.23.8"
   }
 }

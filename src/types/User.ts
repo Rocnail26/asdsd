@@ -1,8 +1,9 @@
 import { z } from "zod";
-import { UserSchema } from "../db/zod"; 
+import { UserModel } from "../db/zod";
 
 
-const baseSchema = UserSchema
+
+const baseSchema = UserModel
 
 
 export const insertUserParams = baseSchema.omit({
