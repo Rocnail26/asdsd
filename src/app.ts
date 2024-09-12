@@ -1,12 +1,21 @@
-import { initServer } from "./presentation/server"
+import express from "express"
+import cors from "cors"
+import mainRouter from "./presentation/route"
 
 
-(async() => {
-  init()
-})()
 
 
-async function init() {
-        initServer()
-  }
+   const app = express()
+   const PORT = process.env.PORT || 8000
+   app.use(cors())
+   app.use(express.json())
+
+   
+  app.use("/",mainRouter)
+
+
+  app.listen(PORT, () => {
+    console.log("server running")})
+
+
 
