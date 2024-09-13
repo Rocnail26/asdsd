@@ -47,7 +47,7 @@ export const getAllRecidencesController = async (req: Request, res: Response) =>
     if (error)
       return res.status(400).json({ error: error.flatten().fieldErrors });
     const residences = await getAllResidences(data);
-    return res.status(400).json(residences);
+    return res.json(residences);
   } catch (error) {
     if (error instanceof Error)
       return res.status(400).json({ error: error.message });
