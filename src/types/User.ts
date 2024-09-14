@@ -27,6 +27,18 @@ export const insertActivateUser = baseSchema.pick({
     id:true
 })
 
+export const insertGetAllUsers = baseSchema.pick({
+    community_id:true
+}).extend({
+    relations: z.coerce.boolean()
+})
+
+
+export const insertGetUser = baseSchema.pick({
+    community_id:true,
+    id: true
+})
+
 
 
 
@@ -34,3 +46,5 @@ export type NewUser = z.infer<typeof insertUserParams>
 export type LoginUser = z.infer<typeof insertLoginUser>
 export type ActivateUser = z.infer<typeof insertActivateUser>
 export type User = z.infer<typeof baseSchema>
+export type GetAllUsers = z.infer<typeof insertGetAllUsers>
+export type getUsers = z.infer<typeof insertGetUser>
