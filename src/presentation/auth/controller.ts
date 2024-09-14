@@ -10,15 +10,16 @@ export const registerUserController = async (req: Request, res: Response) => {
     const body = req.body;
     const basePath = req.body.basePath;
 
-    let userParams = await insertUserParams.safeParseAsync(body);
+    let {data,error} = await insertUserParams.safeParseAsync(body);
     if (!basePath) return res.status(400).json({ error: "falta el BasePath" });
-    if (userParams.error)
+    if (error)
       return res
         .status(400)
-        .json({ error: userParams.error.flatten().fieldErrors });
+        .json({ error: error.flatten().fieldErrors });
 
-    let newUser = await registerUser(userParams.data!);
-
+      
+    let newUser = await registerUser(data!);
+    console.log(data)
     // enviar correo aqui
 
     const payload = {id:newUser.id}
@@ -26,9 +27,9 @@ export const registerUserController = async (req: Request, res: Response) => {
       expiresIn: "24h"
     })
 
-    const [, error] = await sendEmail({email:"condominios59@gmail.com",link:`${basePath}/${token}`})
+    const [, errorEmail] = await sendEmail({email:"condominios59@gmail.com",link:`${basePath}/${token}`})
 
-    if(error){
+    if(errorEmail){
       console.log(error)
      return res.status(400).json({error:"error en el envio de correo usuario debe verificar correo"})
     }

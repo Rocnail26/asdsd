@@ -297,7 +297,9 @@ export const AccountSchema = z.object({
   description: z.string(),
   active: z.boolean(),
   community_id: z.string(),
-  balance: z.bigint(),
+  balance: z.instanceof(Prisma.Decimal, { message: "Field 'balance' must be a Decimal. Location: ['Models', 'Account']"}),
 })
+
+
 
 export type Account = z.infer<typeof AccountSchema>

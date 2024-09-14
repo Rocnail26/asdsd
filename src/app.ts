@@ -10,12 +10,12 @@ import mainRouter from "./presentation/route"
    app.use(cors())
    app.use(express.json())
 
-   
+  
   app.use("/",mainRouter)
 
 
   app.listen(PORT, () => {
-    console.log("server running")})
+  console.log("server running")})
 
 
 

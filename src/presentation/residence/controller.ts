@@ -6,7 +6,7 @@ import {
   insertResidenceParams,
 } from "../../types/Residence";
 import { createResidence, getAllResidences, getResidence } from "../../services/Residence";
-import { RawQueryArgs } from "@prisma/client/runtime/library";
+
 
 export const createResidenceController = async (
   req: Request,
@@ -21,6 +21,7 @@ export const createResidenceController = async (
       ...body,
       community_id,
     });
+    console.log(data)
     if (error)
       return res.status(400).json({ error: error.flatten().fieldErrors });
     const residence = await createResidence(data);

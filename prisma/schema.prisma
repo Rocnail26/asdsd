@@ -187,7 +187,7 @@ model Account {
   description     String
   active          Boolean
   community_id    String       
-  balance         BigInt
+  balance         Decimal
 
   Community       Community     @relation(fields: [community_id], references: [id])
   Payment         Payment[]
