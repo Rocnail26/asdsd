@@ -91,7 +91,6 @@ model ResidenceType {
   community_id String
 
   Residence    Residence[]
-  ExpenseType  ExpenseType[]
   Community    Community     @relation(fields:[community_id],references:[id])
 }
 
@@ -128,11 +127,9 @@ model Expense {
   emitingDate      DateTime    @db.Date
   expireDate       DateTime    @db.Date
   status           String
-  expenseType_id   Int
   payment_id       String
 
   Residence        Residence   @relation(fields: [residence_id], references: [id])
-  ExpenseType      ExpenseType @relation(fields: [expenseType_id], references: [id])
   Payment          Payment     @relation(fields: [payment_id], references: [id])
 }
 
@@ -170,15 +167,6 @@ model Cashout {
   Account         Account     @relation(fields: [account_id], references: [id])
 }
 
-model ExpenseType {
-  id              Int           @id @default(autoincrement())
-  title           String
-  value           Int
-  residenceType_id Int       
-
-  ResidenceType   ResidenceType  @relation(fields: [residenceType_id], references: [id])
-  Expense         Expense[]
-}
 
 
 model Account {

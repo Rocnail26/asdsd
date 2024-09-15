@@ -9,7 +9,10 @@ export const getAllUsers = async(data:GetAllUsers) => {
         const {community_id,relations} = data
         const query:Prisma.UserFindManyArgs = {
             where:{
-                community_id
+                community_id,
+                role_id: {
+                    not: 1
+                }
             }
         } 
 

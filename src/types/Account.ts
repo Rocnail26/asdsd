@@ -21,10 +21,6 @@ export const insertGetAccount = baseSchema.pick({
 
 export const insertEditAccount = baseSchema.omit({
     balance:true,
-}).extend({
-    active: z.coerce.boolean().optional(),
-    title: z.string().optional(),
-    description: z.string().optional()
 })
 
 export type NewAccount = z.infer<typeof insertAccountParams>

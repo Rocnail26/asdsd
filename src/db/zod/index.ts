@@ -91,13 +91,11 @@ export const ProviderScalarFieldEnumSchema = z.enum(['id','title','contactName',
 
 export const RoleScalarFieldEnumSchema = z.enum(['id','title','description','modules']);
 
-export const ExpenseScalarFieldEnumSchema = z.enum(['id','title','residence_id','emitingDate','expireDate','status','expenseType_id','payment_id']);
+export const ExpenseScalarFieldEnumSchema = z.enum(['id','title','residence_id','emitingDate','expireDate','status','payment_id']);
 
 export const PaymentScalarFieldEnumSchema = z.enum(['id','title','description','registerDate','amount','owner_id','voucherImage','isEmailSend','account_id','created_by']);
 
 export const CashoutScalarFieldEnumSchema = z.enum(['id','title','description','provider_id','amount','billImage','account_id','status','registerDate']);
-
-export const ExpenseTypeScalarFieldEnumSchema = z.enum(['id','title','value','residenceType_id']);
 
 export const AccountScalarFieldEnumSchema = z.enum(['id','title','description','active','community_id','balance']);
 
@@ -231,7 +229,6 @@ export const ExpenseSchema = z.object({
   emitingDate: z.coerce.date(),
   expireDate: z.coerce.date(),
   status: z.string(),
-  expenseType_id: z.number().int(),
   payment_id: z.string(),
 })
 
@@ -275,19 +272,6 @@ export const CashoutSchema = z.object({
 export type Cashout = z.infer<typeof CashoutSchema>
 
 /////////////////////////////////////////
-// EXPENSE TYPE SCHEMA
-/////////////////////////////////////////
-
-export const ExpenseTypeSchema = z.object({
-  id: z.number().int(),
-  title: z.string(),
-  value: z.number().int(),
-  residenceType_id: z.number().int(),
-})
-
-export type ExpenseType = z.infer<typeof ExpenseTypeSchema>
-
-/////////////////////////////////////////
 // ACCOUNT SCHEMA
 /////////////////////////////////////////
 
@@ -299,7 +283,5 @@ export const AccountSchema = z.object({
   community_id: z.string(),
   balance: z.instanceof(Prisma.Decimal, { message: "Field 'balance' must be a Decimal. Location: ['Models', 'Account']"}),
 })
-
-
 
 export type Account = z.infer<typeof AccountSchema>

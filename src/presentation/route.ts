@@ -5,6 +5,7 @@ import residenceTypeRouter from "./residenceType/Route"
 import roleRouter from "./role/route"
 import userRoute from "./user/route"
 import accountRouter from "./account/route"
+import providerRouter from "./provider/route"
 
 
 const mainRouter = Router()
@@ -16,5 +17,6 @@ mainRouter.use("/residenceType",residenceTypeRouter)
 mainRouter.use("/role",roleRouter)
 mainRouter.use("/user",userRoute)
 mainRouter.use("/account",accountRouter)
+mainRouter.use("/provider",providerRouter)
 
 export default mainRouter 
