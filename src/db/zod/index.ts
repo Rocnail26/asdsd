@@ -91,13 +91,13 @@ export const ProviderScalarFieldEnumSchema = z.enum(['id','title','contactName',
 
 export const RoleScalarFieldEnumSchema = z.enum(['id','title','description','modules']);
 
-export const ExpenseScalarFieldEnumSchema = z.enum(['id','title','residence_id','emitingDate','expireDate','status','payment_id']);
+export const ExpenseScalarFieldEnumSchema = z.enum(['id','title','residence_id','emitingDate','dayPayment','value','owedValue','payment_id','isRecurrent']);
 
 export const PaymentScalarFieldEnumSchema = z.enum(['id','title','description','registerDate','amount','owner_id','voucherImage','isEmailSend','account_id','created_by']);
 
 export const CashoutScalarFieldEnumSchema = z.enum(['id','title','description','provider_id','amount','billImage','account_id','status','registerDate']);
 
-export const AccountScalarFieldEnumSchema = z.enum(['id','title','description','active','community_id','balance']);
+export const AccountScalarFieldEnumSchema = z.enum(['id','title','description','active','community_id','balance','image','Responsable','accountNumber']);
 
 export const SortOrderSchema = z.enum(['asc','desc']);
 
@@ -226,10 +226,12 @@ export const ExpenseSchema = z.object({
   id: z.string(),
   title: z.string(),
   residence_id: z.string(),
-  emitingDate: z.coerce.date(),
-  expireDate: z.coerce.date(),
-  status: z.string(),
-  payment_id: z.string(),
+  emitingDate: z.coerce.date().nullable(),
+  dayPayment: z.coerce.date().nullable(),
+  value: z.instanceof(Prisma.Decimal, { message: "Field 'value' must be a Decimal. Location: ['Models', 'Expense']"}),
+  owedValue: z.instanceof(Prisma.Decimal, { message: "Field 'owedValue' must be a Decimal. Location: ['Models', 'Expense']"}),
+  payment_id: z.string().nullable(),
+  isRecurrent: z.boolean(),
 })
 
 export type Expense = z.infer<typeof ExpenseSchema>
@@ -282,6 +284,9 @@ export const AccountSchema = z.object({
   active: z.boolean(),
   community_id: z.string(),
   balance: z.instanceof(Prisma.Decimal, { message: "Field 'balance' must be a Decimal. Location: ['Models', 'Account']"}),
+  image: z.string().nullable(),
+  Responsable: z.string().nullable(),
+  accountNumber: z.string().nullable(),
 })
 
 export type Account = z.infer<typeof AccountSchema>
