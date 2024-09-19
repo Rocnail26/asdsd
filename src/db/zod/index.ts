@@ -108,6 +108,11 @@ export const QueryModeSchema = z.enum(['default','insensitive']);
 export const NullsOrderSchema = z.enum(['first','last']);
 
 export const JsonNullValueFilterSchema = z.enum(['DbNull','JsonNull','AnyNull',]).transform((value) => value === 'JsonNull' ? Prisma.JsonNull : value === 'DbNull' ? Prisma.JsonNull : value === 'AnyNull' ? Prisma.AnyNull : value);
+
+export const StatusPaymentSchema = z.enum(['Pending','Paid']);
+
+export type StatusPaymentType = `${z.infer<typeof StatusPaymentSchema>}`
+
 /////////////////////////////////////////
 // MODELS
 /////////////////////////////////////////
@@ -241,17 +246,17 @@ export type Expense = z.infer<typeof ExpenseSchema>
 /////////////////////////////////////////
 
 export const PaymentSchema = z.object({
+  status: StatusPaymentSchema,
   id: z.string(),
   title: z.string(),
   description: z.string(),
   registerDate: z.coerce.date(),
   amount: z.instanceof(Prisma.Decimal, { message: "Field 'amount' must be a Decimal. Location: ['Models', 'Payment']"}),
   owner_id: z.string(),
-  voucherImage: z.string(),
+  voucherImage: z.string().nullable(),
   isEmailSend: z.boolean(),
   account_id: z.string(),
   created_by: z.string(),
-  status: z.string(),
 })
 
 export type Payment = z.infer<typeof PaymentSchema>

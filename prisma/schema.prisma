@@ -135,6 +135,11 @@ model Expense {
   Payment          Payment?     @relation(fields: [payment_id], references: [id])
 }
 
+enum StatusPayment {
+  Pending
+  Paid
+}
+
 model Payment {
   id              String      @id @default(uuid())
   title           String
@@ -142,11 +147,11 @@ model Payment {
   registerDate    DateTime    @db.Date
   amount          Decimal     @db.Decimal(8, 2)
   owner_id        String        
-  voucherImage    String
+  voucherImage    String?
   isEmailSend     Boolean
   account_id      String      
   created_by      String      
-  status          String
+  status          StatusPayment
  
   Expense         Expense[]
   User           User        @relation("paymentBy",fields: [owner_id], references: [id])

@@ -4,6 +4,7 @@ import { insertAccountParams } from "../../types/Account";
 import { handleError } from "../../utils/handleError";
 import { createPayment, editPayment, getAllPayment, getpayment } from "../../services/payment";
 import { insertEditPayment, insertGetAllPayments, insertGetPayment, insertPaymentParams } from "../../types/Payment";
+import { Prisma } from "@prisma/client";
 
 
 export const createPaymentController = async(req: Request, res: Response) => {
@@ -12,7 +13,7 @@ export const createPaymentController = async(req: Request, res: Response) => {
         const body = req.body;
         const admin = await isAdmin(id);
         if (!admin) return res.status(403).json("invalid admin");
-        const {data,error} = await insertPaymentParams.safeParseAsync({...body,createdBy:id})
+        const {data,error} = await insertPaymentParams.safeParseAsync({...body,created_by:id,amount: new Prisma.Decimal(body.amount)})
         if(error) return res.status(400).json({error: error.flatten().fieldErrors})
         const payment = await createPayment(data)
         res.status(201).json(payment)
