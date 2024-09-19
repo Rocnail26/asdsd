@@ -21,7 +21,6 @@ export const createResidenceController = async (
       ...body,
       community_id,
     });
-    console.log(data)
     if (error)
       return res.status(400).json({ error: error.flatten().fieldErrors });
     const residence = await createResidence(data);

@@ -146,7 +146,7 @@ model Payment {
   isEmailSend     Boolean
   account_id      String      
   created_by      String      
-  
+  status          String
  
   Expense         Expense[]
   User           User        @relation("paymentBy",fields: [owner_id], references: [id])

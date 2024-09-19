@@ -93,7 +93,7 @@ export const RoleScalarFieldEnumSchema = z.enum(['id','title','description','mod
 
 export const ExpenseScalarFieldEnumSchema = z.enum(['id','title','residence_id','emitingDate','dayPayment','value','owedValue','payment_id','isRecurrent']);
 
-export const PaymentScalarFieldEnumSchema = z.enum(['id','title','description','registerDate','amount','owner_id','voucherImage','isEmailSend','account_id','created_by']);
+export const PaymentScalarFieldEnumSchema = z.enum(['id','title','description','registerDate','amount','owner_id','voucherImage','isEmailSend','account_id','created_by','status']);
 
 export const CashoutScalarFieldEnumSchema = z.enum(['id','title','description','provider_id','amount','billImage','account_id','status','registerDate']);
 
@@ -251,6 +251,7 @@ export const PaymentSchema = z.object({
   isEmailSend: z.boolean(),
   account_id: z.string(),
   created_by: z.string(),
+  status: z.string(),
 })
 
 export type Payment = z.infer<typeof PaymentSchema>
