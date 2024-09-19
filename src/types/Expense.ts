@@ -48,7 +48,7 @@ export const insertEditExpense = baseSchema.omit({
   community_id: z.string(),
   emitingDate: z.coerce.date().optional(),
     dayPayment: z.coerce.date().optional(),
-});
+}).partial()
 
 export type NewExpense = z.infer<typeof insertExpenseParams>;
 export type GetAllExpenses = z.infer<typeof insertGetAllExpenses>;
