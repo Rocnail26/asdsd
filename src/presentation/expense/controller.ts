@@ -7,6 +7,7 @@ import { handleError } from "../../utils/handleError";
 
 export const createExpenseController = async (req: Request, res: Response) => {
   try {
+    
     const { id, community_id } = req.body.user;
     const body = req.body;
     const admin = await isAdmin(id);
@@ -15,8 +16,10 @@ export const createExpenseController = async (req: Request, res: Response) => {
       ...body,
       community_id,
     });
+    console.log("ghola")
     if (error)
       return res.status(400).json({ error: error.flatten().fieldErrors });
+    console.log("hola")
     const expense = await createExpense(data);
     return res.status(201).json(expense);
   } catch (error) {
@@ -32,10 +35,13 @@ export const getAllExpensesController = async (req: Request, res: Response) => {
     const {data,error} = await insertGetAllExpenses.safeParseAsync({community_id})
     if (error)
         return res.status(400).json({ error: error.flatten().fieldErrors });
+      
     const expenses = await getAllExpense(data)
     return res.json(expenses)
   } catch (error) {
-    handleError(res,error)
+ 
+   return handleError(res,error)
+
   }
 };
 

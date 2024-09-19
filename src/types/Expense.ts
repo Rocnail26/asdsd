@@ -25,6 +25,7 @@ export const insertExpenseParams = baseSchema
     {
       message:
         "emitingDate, dayPayment y isCurrent no estan siendo correctamente utilizados",
+        path: ["dayPayment"]
     }
   ).refine(({owedValue,value}) => owedValue.toString == value.toString , {message:"owedValue y value no son iguales",path: ["owedValue"]} );
 
