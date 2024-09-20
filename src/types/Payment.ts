@@ -5,6 +5,8 @@ const baseSchema = PaymentSchema
 
 export const insertPaymentParams = baseSchema.omit({
     id:true,
+}).extend({
+    expenses: z.object({id:z.string()}).optional()
 })
 
 export const insertGetAllPayments = baseSchema.extend({
@@ -29,7 +31,6 @@ export const insertEditPayment = baseSchema.pick({
     id:z.string(),
     community_id: z.string()
 })
-
 
 export type NewPayment = z.infer<typeof insertPaymentParams>
 export type GetPayment = z.infer<typeof insertGetPayment>

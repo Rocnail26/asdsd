@@ -4,8 +4,16 @@ import { NewPayment } from "../../types/Payment";
 
 export const createPayment = async(data: NewPayment) => {
     try {
+
+        const {expenses,...rest} = data
+
         const payment = await prisma.payment.create({
-             data
+             data:{
+                ...rest,
+                Expense:{
+                    connect:expenses
+                }
+             }
         })
 
         if(payment.status == "Paid"){

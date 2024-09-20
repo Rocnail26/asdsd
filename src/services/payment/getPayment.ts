@@ -10,6 +10,17 @@ export const getpayment = async (data:GetPayment) => {
             Account:{
                 community_id
             }
+        },
+        include:{
+            Expense:true,
+            Account: true,
+            Admin:true,
+            User:true
+        },
+        omit:{
+            account_id:true,
+            created_by:true,
+            owner_id:true
         }
        })
 
