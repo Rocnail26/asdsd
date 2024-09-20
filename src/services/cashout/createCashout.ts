@@ -13,7 +13,7 @@ export const createCashout = async (data: NewCashout) => {
           },
         },
       });
-     
+
       if (!account) throw new Error("balance insuficiente");
 
       await prisma.account.update({
@@ -25,11 +25,10 @@ export const createCashout = async (data: NewCashout) => {
         },
         data:{
           balance:{
-            decrement: amount
-          }
-        }
-      })
-      
+            decrement: amount,
+          },
+        },
+      });
     }
 
     const cashout = await prisma.cashout.create({
