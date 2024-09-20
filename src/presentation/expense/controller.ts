@@ -4,6 +4,7 @@ import { insertAccountParams } from "../../types/Account";
 import { createExpense, editExpense, getAllExpense, getExpense } from "../../services/Expense";
 import { insertEditExpense, insertExpenseParams, insertGetAllExpenses, insertGetExpense } from "../../types/Expense";
 import { handleError } from "../../utils/handleError";
+import { Prisma } from "@prisma/client";
 
 export const createExpenseController = async (req: Request, res: Response) => {
   try {
@@ -69,7 +70,7 @@ export const editExpenseController = async (req: Request, res: Response) => {
         const body = req.body
         const admin = await isAdmin(id);
         if (!admin) return res.status(403).json("invalid admin");
-        const {data,error} = await insertEditExpense.safeParseAsync({...body,...params,community_id})
+        const {data,error} = await insertEditExpense.safeParseAsync({...body,...params,community_id, owedValue: new Prisma.Decimal(body.owedValue)})
         if (error)
             return res.status(400).json({ error: error.flatten().fieldErrors });
         const expense = await editExpense(data)
