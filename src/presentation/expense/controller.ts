@@ -16,10 +16,10 @@ export const createExpenseController = async (req: Request, res: Response) => {
       ...body,
       community_id,
     });
-    console.log("ghola")
+   
     if (error)
       return res.status(400).json({ error: error.flatten().fieldErrors });
-    console.log("hola")
+   
     const expense = await createExpense(data);
     return res.status(201).json(expense);
   } catch (error) {
@@ -55,6 +55,7 @@ export const getExpenseController = async (req: Request, res: Response) => {
         if (error)
             return res.status(400).json({ error: error.flatten().fieldErrors });
         const expense = await getExpense(data)
+        if(!expense) return res.status(400).json()
         return res.json(expense)
     } catch (error) {
         handleError(res,error)
