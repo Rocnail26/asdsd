@@ -167,7 +167,7 @@ model Cashout {
   amount          Decimal     @db.Decimal(8, 2)
   billImage       String
   account_id      String      
-  status          String
+  status          StatusPayment
   registerDate    DateTime    @db.Date
 
   Provider        Provider    @relation(fields: [provider_id], references: [id])

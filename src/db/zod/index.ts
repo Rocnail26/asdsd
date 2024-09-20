@@ -266,6 +266,7 @@ export type Payment = z.infer<typeof PaymentSchema>
 /////////////////////////////////////////
 
 export const CashoutSchema = z.object({
+  status: StatusPaymentSchema,
   id: z.string(),
   title: z.string(),
   description: z.string(),
@@ -273,7 +274,6 @@ export const CashoutSchema = z.object({
   amount: z.instanceof(Prisma.Decimal, { message: "Field 'amount' must be a Decimal. Location: ['Models', 'Cashout']"}),
   billImage: z.string(),
   account_id: z.string(),
-  status: z.string(),
   registerDate: z.coerce.date(),
 })
 
