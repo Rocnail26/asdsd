@@ -8,6 +8,7 @@ import accountRouter from "./account/route"
 import providerRouter from "./provider/route"
 import expenseRouter from "./expense/route"
 import paymentRouter from "./payment/route"
+import cashoutRouter from "./cashout/route"
 
 const mainRouter = Router()
 
@@ -20,5 +21,6 @@ mainRouter.use("/account",accountRouter)
 mainRouter.use("/provider",providerRouter)
 mainRouter.use("/expense",expenseRouter)
 mainRouter.use("/payment",paymentRouter)
+mainRouter.use("/cashout",cashoutRouter)
 
 export default mainRouter 
