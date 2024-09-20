@@ -1,4 +1,5 @@
 import { prisma } from "../../db/prisma"
+import { ResidenceTypeScalarFieldEnumSchema } from "../../db/zod"
 import { GetAllPayment } from "../../types/Payment"
 
 
@@ -9,6 +10,15 @@ export const getAllPayment = async (data:GetAllPayment) => {
             where:{
                 Account:{
                     community_id
+                }
+            },
+            include:{
+                Expense:{
+                    select:{
+                        owedValue:true,
+                        title:true,
+                        value:true
+                    }
                 }
             }
         })
