@@ -28,6 +28,7 @@ model Community {
   User            User[]
   Account         Account[]
   ResidenceType   ResidenceType[]
+  ParkingSlot     ParkingSlot[]
 }
 
 
@@ -52,10 +53,9 @@ model User {
   PaymentsMade    Payment[]    @relation("paymentBy")
   Residence       Residence[]
   ResidentIn      Residence?   @relation("resident",fields: [residence_id],references: [id])
+  ParkingSlot     ParkingSlot[]
+  Vehicle         Vehicle[]
 }
-
-
-
 
 
 model Residence {
@@ -69,7 +69,6 @@ model Residence {
   Owner           User?       @relation(fields: [owner_id], references: [id])
   Community       Community     @relation(fields: [community_id], references: [id])
   ResidenceType   ResidenceType @relation(fields: [residenceType_id], references: [id])
-  ParkingSlot     ParkingSlot[]
   Expense         Expense[]
   Resident        User[]     @relation("resident")
 }
@@ -77,9 +76,11 @@ model Residence {
 model ParkingSlot {
   id           String     @id @default(uuid())
   number       Int
-  residence_id String     
+  user_id      String?
+  community_id String     
 
-  Residence    Residence  @relation(fields: [residence_id], references: [id])
+  User    User?  @relation(fields: [user_id], references: [id])
+  Community Community  @relation(fields: [community_id],references:[id])
 }
 
 
@@ -92,6 +93,16 @@ model ResidenceType {
 
   Residence    Residence[]
   Community    Community     @relation(fields:[community_id],references:[id])
+}
+
+model Vehicle {
+  id        Int           @id @default(autoincrement())
+  plate     String
+  model     String
+  color     String
+  user_id   String
+
+  User      User         @relation(fields:[user_id],references:[id])
 }
 
 model Provider {
@@ -186,6 +197,7 @@ model Account {
   image           String?
   Responsable     String?
   accountNumber   String?
+  bank            String?
 
   Community       Community     @relation(fields: [community_id], references: [id])
   Payment         Payment[]

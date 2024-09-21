@@ -83,9 +83,11 @@ export const UserScalarFieldEnumSchema = z.enum(['id','userName','email','passwo
 
 export const ResidenceScalarFieldEnumSchema = z.enum(['id','title','owner_id','community_id','contacts','residenceType_id']);
 
-export const ParkingSlotScalarFieldEnumSchema = z.enum(['id','number','residence_id']);
+export const ParkingSlotScalarFieldEnumSchema = z.enum(['id','number','user_id','community_id']);
 
 export const ResidenceTypeScalarFieldEnumSchema = z.enum(['id','title','description','community_id']);
+
+export const VehicleScalarFieldEnumSchema = z.enum(['id','plate','model','color','user_id']);
 
 export const ProviderScalarFieldEnumSchema = z.enum(['id','title','contactName','description','phone','email','address','website','active','community_id']);
 
@@ -97,7 +99,7 @@ export const PaymentScalarFieldEnumSchema = z.enum(['id','title','description','
 
 export const CashoutScalarFieldEnumSchema = z.enum(['id','title','description','provider_id','amount','billImage','account_id','status','registerDate']);
 
-export const AccountScalarFieldEnumSchema = z.enum(['id','title','description','active','community_id','balance','image','Responsable','accountNumber']);
+export const AccountScalarFieldEnumSchema = z.enum(['id','title','description','active','community_id','balance','image','Responsable','accountNumber','bank']);
 
 export const SortOrderSchema = z.enum(['asc','desc']);
 
@@ -173,7 +175,8 @@ export type Residence = z.infer<typeof ResidenceSchema>
 export const ParkingSlotSchema = z.object({
   id: z.string(),
   number: z.number().int(),
-  residence_id: z.string(),
+  user_id: z.string().nullable(),
+  community_id: z.string(),
 })
 
 export type ParkingSlot = z.infer<typeof ParkingSlotSchema>
@@ -190,6 +193,20 @@ export const ResidenceTypeSchema = z.object({
 })
 
 export type ResidenceType = z.infer<typeof ResidenceTypeSchema>
+
+/////////////////////////////////////////
+// VEHICLE SCHEMA
+/////////////////////////////////////////
+
+export const VehicleSchema = z.object({
+  id: z.number().int(),
+  plate: z.string(),
+  model: z.string(),
+  color: z.string(),
+  user_id: z.string(),
+})
+
+export type Vehicle = z.infer<typeof VehicleSchema>
 
 /////////////////////////////////////////
 // PROVIDER SCHEMA
@@ -293,6 +310,7 @@ export const AccountSchema = z.object({
   image: z.string().nullable(),
   Responsable: z.string().nullable(),
   accountNumber: z.string().nullable(),
+  bank: z.string().nullable(),
 })
 
 export type Account = z.infer<typeof AccountSchema>

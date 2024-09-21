@@ -13,7 +13,6 @@ try {
             Community:true,
             Expense:true,
             Owner:true,
-            ParkingSlot: true,
             ResidenceType: true,
             Resident: true
         },
