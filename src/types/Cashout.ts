@@ -4,8 +4,12 @@ import { CashoutSchema } from "../db/zod";
 const baseSchema  = CashoutSchema
 
 export const insertCashoutSchema = baseSchema.omit({
-    id:true
-})
+    id:true,
+}).extend({toAccount_id:z.string().optional()}).refine(({toAccount_id,provider_id}) => {
+    if(!toAccount_id && !provider_id) return false
+    if(toAccount_id && provider_id) return false
+    return true
+},{message: "toAccount_id y provider_id solo uno de estos parametros tiene que ser null o tenes un valor valido",path:["account_id"]})
 
 export const insertGetCashout = baseSchema.pick({
     id:true

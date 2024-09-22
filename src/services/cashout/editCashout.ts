@@ -1,5 +1,5 @@
 import { prisma } from "../../db/prisma";
-import { EditCashout, GetCashout } from "../../types/Cashout";
+import { EditCashout } from "../../types/Cashout";
 
 
 
@@ -49,6 +49,32 @@ export const editCashout = async (data:EditCashout) => {
             }
           }) 
        }
+
+       if(cashout.status == "Pending" && data.status == "Paid" && cashout.toAccount_id){
+        await prisma.account.update({
+            where:{
+                id: cashout.account_id
+            },
+            data:{
+                balance: {
+                    decrement: cashout.amount
+                }
+            }
+        })
+        
+        await prisma.account.update({
+         where:{
+           id: cashout.toAccount_id
+         },
+         data:{
+           balance:{
+             increment: amount
+           }
+         }
+        })
+        }
+
+       if(cashout.status == "Paid" && data.status == "Pending" && cashout.toAccount_id) throw new Error("no pudes pasar el pago a pendiente debes hacer una nueva transferencia")
        
        const updatedCashout = await prisma.cashout.update({
             where: {

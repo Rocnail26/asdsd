@@ -2,8 +2,9 @@ import { prisma } from "../../db/prisma";
 import { NewCashout } from "../../types/Cashout";
 
 export const createCashout = async (data: NewCashout) => {
-  const { account_id, amount, status } = data;
+  const { account_id, amount, status,toAccount_id } = data;
   try {
+    
     if (status == "Paid") {
       const account = await prisma.account.findUnique({
         where: {
@@ -29,6 +30,19 @@ export const createCashout = async (data: NewCashout) => {
           },
         },
       });
+    }
+
+    if(status == "Paid" && toAccount_id){
+       await prisma.account.update({
+        where:{
+          id: toAccount_id
+        },
+        data:{
+          balance:{
+            increment: amount
+          }
+        }
+       })
     }
 
     const cashout = await prisma.cashout.create({

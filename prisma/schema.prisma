@@ -174,15 +174,17 @@ model Cashout {
   id              String      @id @default(uuid())
   title           String
   description     String
-  provider_id     String      
+  provider_id     String?      
   amount          Decimal     @db.Decimal(8, 2)
   billImage       String
-  account_id      String      
+  account_id      String   
+  toAccount_id    String?
   status          StatusPayment
   registerDate    DateTime    @db.Date
 
-  Provider        Provider    @relation(fields: [provider_id], references: [id])
+  Provider        Provider?    @relation(fields: [provider_id], references: [id])
   Account         Account     @relation(fields: [account_id], references: [id])
+  ToAccount       Account?     @relation(fields:[toAccount_id],references: [id],name: "ToAccountRelation")
 }
 
 
@@ -202,4 +204,5 @@ model Account {
   Community       Community     @relation(fields: [community_id], references: [id])
   Payment         Payment[]
   Cashout         Cashout[]
+  ToAccount       Cashout[]     @relation(name:"ToAccountRelation")
 }

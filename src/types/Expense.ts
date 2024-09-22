@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { ExpenseSchema } from "../db/zod";
 import { Prisma } from "@prisma/client";
+import { FilterDateSchema, PaginationSchema } from "./Global";
 
 const baseSchema = ExpenseSchema;
 
@@ -31,13 +32,13 @@ export const insertExpenseParams = baseSchema
 
 export const insertGetAllExpenses = baseSchema.extend({
   community_id: z.string()
-}).pick({community_id:true})
+}).pick({community_id:true}).merge(PaginationSchema).merge(FilterDateSchema)
 
 export const insertGetExpense = baseSchema.extend({
-  community_id: z.string()
+  community_id: z.string(),
 }).pick({
   id: true,
-  community_id:true
+  community_id:true,
 });
 
 export const insertEditExpense = baseSchema.omit({

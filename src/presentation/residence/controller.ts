@@ -2,10 +2,12 @@ import { Request, Response } from "express";
 import { isAdmin } from "../../services/user";
 import {
   insertGetAllResidenceParams,
+  insertGetExpenseByResident,
   insertGetResidenceParams,
   insertResidenceParams,
 } from "../../types/Residence";
-import { createResidence, getAllResidences, getResidence } from "../../services/Residence";
+import { createResidence, getAllResidences, getExpenseByResident, getResidence } from "../../services/Residence";
+import { handleError } from "../../utils/handleError";
 
 
 export const createResidenceController = async (
@@ -72,4 +74,24 @@ export const getResidenceController = async (req: Request, res: Response) => {
   }
 
 
+}
+
+export const getExpensesByResidentController = async (req: Request, res: Response) => {
+  try {
+    const { id, community_id } = req.body.user;
+    const params = req.params
+    const query = req.query
+    const admin = await isAdmin(id);
+    if (!admin) return res.status(403).json("invalid admin");
+    const {data,error} = await insertGetExpenseByResident.safeParseAsync({...params,...query})
+    if (error)
+      return res.status(400).json({ error: error.flatten().fieldErrors });
+    
+    const expenses = await getExpenseByResident(data)
+
+    return res.json(expenses)
+
+  } catch (error) {
+    handleError(res,error)
+  }
 }

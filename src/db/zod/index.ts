@@ -97,7 +97,7 @@ export const ExpenseScalarFieldEnumSchema = z.enum(['id','title','residence_id',
 
 export const PaymentScalarFieldEnumSchema = z.enum(['id','title','description','registerDate','amount','owner_id','voucherImage','isEmailSend','account_id','created_by','status']);
 
-export const CashoutScalarFieldEnumSchema = z.enum(['id','title','description','provider_id','amount','billImage','account_id','status','registerDate']);
+export const CashoutScalarFieldEnumSchema = z.enum(['id','title','description','provider_id','amount','billImage','account_id','toAccount_id','status','registerDate']);
 
 export const AccountScalarFieldEnumSchema = z.enum(['id','title','description','active','community_id','balance','image','Responsable','accountNumber','bank']);
 
@@ -287,10 +287,11 @@ export const CashoutSchema = z.object({
   id: z.string(),
   title: z.string(),
   description: z.string(),
-  provider_id: z.string(),
+  provider_id: z.string().nullable(),
   amount: z.instanceof(Prisma.Decimal, { message: "Field 'amount' must be a Decimal. Location: ['Models', 'Cashout']"}),
   billImage: z.string(),
   account_id: z.string(),
+  toAccount_id: z.string().nullable(),
   registerDate: z.coerce.date(),
 })
 

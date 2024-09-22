@@ -31,9 +31,10 @@ export const createExpenseController = async (req: Request, res: Response) => {
 export const getAllExpensesController = async (req: Request, res: Response) => {
   try {
     const { id, community_id } = req.body.user;
+    const query = req.query
     const admin = await isAdmin(id);
     if (!admin) return res.status(403).json("invalid admin");
-    const {data,error} = await insertGetAllExpenses.safeParseAsync({community_id})
+    const {data,error} = await insertGetAllExpenses.safeParseAsync({...query,community_id})
     if (error)
         return res.status(400).json({ error: error.flatten().fieldErrors });
       

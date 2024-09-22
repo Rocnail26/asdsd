@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { ResidenceSchema } from "../db/zod";
+import {  FilterDateSchema, PaginationSchema } from "./Global";
 
 
 
@@ -25,6 +26,11 @@ export const insertGetResidenceParams = baseSchema.pick({
     community_id: true
 })
 
+export const insertGetExpenseByResident = baseSchema.pick({
+    id:true
+}).extend({owedValue: z.coerce.boolean().optional()}).merge(PaginationSchema).merge(FilterDateSchema)
+
 export type NewResidence = z.infer<typeof insertResidenceParams>
 export type GetAllResidence = z.infer<typeof insertGetAllResidenceParams>
 export type GetResidence = z.infer<typeof insertGetResidenceParams >
+export type GetExpenseByResidence = z.infer<typeof insertGetExpenseByResident>
