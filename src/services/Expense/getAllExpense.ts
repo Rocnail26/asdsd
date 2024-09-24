@@ -12,10 +12,18 @@ export const getAllExpense = async (data: GetAllExpenses) => {
       },
       owedValue: { gt: 0 },
       OR: [
-        { emitingDate: { gte: from } }, 
-        { dayPayment: { gte: from } },
-        { emitingDate: { lte: to } }, 
-        { dayPayment: { lte: to } }
+        {
+          AND: [
+            { emitingDate: { gte: from } },
+            { emitingDate: { lte: to } }
+          ]
+        },
+        {
+          AND: [
+            { dayPayment: { gte: from } },
+            { dayPayment: { lte: to } }
+          ]
+        }
       ]
     },
     skip: (page - 1) * limit,

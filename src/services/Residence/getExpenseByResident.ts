@@ -16,47 +16,27 @@ export const getExpenseByResident = async ( data:GetExpenseByResidence) => {
             gt: !!owedValue  ? 0 : undefined  
            },
            OR:[
-            { emitingDate: { gte: from } }, 
-            { dayPayment: { gte: from } },
-            { emitingDate: { lte: to } }, 
-            { dayPayment: { lte: to } }
-           ]
+            {
+                AND: [
+                  { emitingDate: { gte: from } },
+                  { emitingDate: { lte: to } }
+                ]
+              },
+              {
+                AND: [
+                  { dayPayment: { gte: from } },
+                  { dayPayment: { lte: to } }
+                ]
+              }
+            ]
         },
         skip: (page - 1 ) * limit,
         take: limit, 
         }
 
 
-    if(from){
-        query.where!.OR = [
-            {
-                emitingDate:{
-                    gte:from
-                }
-            },
-            {
-                dayPayment:{
-                    gte:from
-                }
-            }
-        ]
-    
-    }
 
-    if(to){
-        query.where!.OR = [
-            {
-                emitingDate:{
-                    lte:to
-                }
-            },
-            {
-                dayPayment:{
-                    lte:to
-                }
-            }
-        ]
-    }
+
     
 
     try {
