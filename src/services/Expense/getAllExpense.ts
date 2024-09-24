@@ -23,7 +23,8 @@ export const getAllExpense = async (data: GetAllExpenses) => {
             { dayPayment: { gte: from } },
             { dayPayment: { lte: to } }
           ]
-        }
+        },
+        ...(!from && !to ? [{emitingDate:{ gte: new Date(0)}}, {dayPayment:{ gte: new Date(0)}}] : [])
       ]
     },
     skip: (page - 1) * limit,

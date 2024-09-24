@@ -27,12 +27,16 @@ export const getExpenseByResident = async ( data:GetExpenseByResidence) => {
                   { dayPayment: { gte: from } },
                   { dayPayment: { lte: to } }
                 ]
-              }
+              },
+              ...(!from && !to ? [{emitingDate:{ gte: new Date(0)}}, {dayPayment:{ gte: new Date(0)}}] : [])
             ]
+            
         },
         skip: (page - 1 ) * limit,
         take: limit, 
         }
+
+        console.log(query)
 
     try {
        return await prisma.expense.findMany(query)
