@@ -34,11 +34,6 @@ export const getExpenseByResident = async ( data:GetExpenseByResidence) => {
         take: limit, 
         }
 
-
-
-
-    
-
     try {
        return await prisma.expense.findMany(query)
     } catch (error) {
