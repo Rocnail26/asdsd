@@ -7,46 +7,21 @@ export const getAllExpense = async (data: GetAllExpenses) => {
 
   const query: Prisma.ExpenseFindManyArgs = {
     where: {
-      Residence: {
-        Community: {
-          id: community_id,
-        },
+      Residence:{
+        community_id
       },
+      owedValue: { gt: 0 },
+      OR: [
+        { emitingDate: { gte: from } }, 
+        { dayPayment: { gte: from } },
+        { emitingDate: { lte: to } }, 
+        { dayPayment: { lte: to } }
+      ]
     },
     skip: (page - 1) * limit,
-    take: limit
+    take: limit,
   };
-
-  if (from) {
-    query.where!.OR = [
-      {
-        emitingDate: {
-          gte: from,
-        },
-      },
-      {
-        dayPayment: {
-          gte: from,
-        },
-      },
-    ];
-  }
-
-  if (to) {
-    query.where!.OR = [
-      {
-        emitingDate: {
-          lte: to,
-        },
-      },
-      {
-        dayPayment: {
-          lte: to,
-        },
-      },
-    ];
-  }
-
+  
   try {
     const expenses = prisma.expense.findMany(query);
     return expenses;

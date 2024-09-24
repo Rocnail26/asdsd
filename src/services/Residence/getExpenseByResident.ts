@@ -12,16 +12,20 @@ export const getExpenseByResident = async ( data:GetExpenseByResidence) => {
     const query: Prisma.ExpenseFindManyArgs = {
         where:{
            residence_id:id,
+           owedValue:{
+            gt: !!owedValue  ? 0 : undefined  
+           },
+           OR:[
+            { emitingDate: { gte: from } }, 
+            { dayPayment: { gte: from } },
+            { emitingDate: { lte: to } }, 
+            { dayPayment: { lte: to } }
+           ]
         },
         skip: (page - 1 ) * limit,
         take: limit, 
         }
 
-    if(owedValue){
-      query.where!.owedValue = {
-            gt:0
-        }
-    }
 
     if(from){
         query.where!.OR = [
