@@ -50,7 +50,6 @@ model User {
   Community       Community     @relation(fields: [community_id], references: [id])
   Role            Role?        @relation(fields: [role_id], references: [id])
   PaymentsCreated Payment[]    @relation("createdBy")
-  PaymentsMade    Payment[]    @relation("paymentBy")
   Residence       Residence[]
   ResidentIn      Residence?   @relation("resident",fields: [residence_id],references: [id])
   ParkingSlot     ParkingSlot[]
@@ -157,7 +156,7 @@ model Payment {
   description     String
   registerDate    DateTime    @db.Date
   amount          Decimal     @db.Decimal(8, 2)
-  owner_id        String        
+  whoPay          String?        
   voucherImage    String?
   isEmailSend     Boolean
   account_id      String      
@@ -165,7 +164,6 @@ model Payment {
   status          StatusPayment
  
   Expense         Expense[]
-  User           User        @relation("paymentBy",fields: [owner_id], references: [id])
   Account         Account     @relation(fields: [account_id], references: [id])
   Admin            User        @relation("createdBy", fields: [created_by], references: [id])
 }

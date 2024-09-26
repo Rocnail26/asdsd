@@ -43,7 +43,7 @@ export const insertGetExpense = baseSchema.extend({
 
 export const insertEditExpense = baseSchema.omit({
   value: true,
-  residence_id:true
+  residence_id:true,
 }).extend({
   community_id: z.string(),
   emitingDate: z.coerce.date().optional(),

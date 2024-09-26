@@ -11,7 +11,6 @@ export const getUser = async (data:getUsers) => {
                 include:{
                     Community:true,
                     PaymentsCreated:true,
-                    PaymentsMade:true,
                     Residence:true,
                     ResidentIn:true,
                     Role:true

@@ -20,7 +20,6 @@ export const getAllUsers = async(data:GetAllUsers) => {
             query.include = {
                 Community:true,
                 PaymentsCreated:true,
-                PaymentsMade:true,
                 Residence:true,
                 ResidentIn:true,
                 Role:true
