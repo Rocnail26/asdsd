@@ -5,7 +5,7 @@ import { prisma } from "../../db/prisma";
 
 
 
-export const getExpenseByResident = async ( data:GetExpenseByResidence) => {
+export const getExpenseByResidence = async ( data:GetExpenseByResidence) => {
     const {id,owedValue,limit,page,from,to} = data
 
 

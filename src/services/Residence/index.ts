@@ -1,4 +1,5 @@
 export * from "./createResidence"
 export * from "./getAllResidences"
 export * from "./getResidence"
-export * from "./getExpenseByResident"
+export * from "./getExpenseByResidence"
+export * from "./getPaymentsByResidence"

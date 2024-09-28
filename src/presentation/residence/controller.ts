@@ -2,11 +2,12 @@ import { Request, Response } from "express";
 import { isAdmin } from "../../services/user";
 import {
   insertGetAllResidenceParams,
-  insertGetExpenseByResident,
+  insertGetExpenseByResidence,
+  insertGetPaymentsByResidence,
   insertGetResidenceParams,
   insertResidenceParams,
 } from "../../types/Residence";
-import { createResidence, getAllResidences, getExpenseByResident, getResidence } from "../../services/Residence";
+import { createResidence, getAllResidences, getExpenseByResidence, getResidence ,getPaymentsByResidence} from "../../services/Residence";
 import { handleError } from "../../utils/handleError";
 
 
@@ -83,13 +84,33 @@ export const getExpensesByResidentController = async (req: Request, res: Respons
     const query = req.query
     const admin = await isAdmin(id);
     if (!admin) return res.status(403).json("invalid admin");
-    const {data,error} = await insertGetExpenseByResident.safeParseAsync({...params,...query})
+    const {data,error} = await insertGetExpenseByResidence.safeParseAsync({...params,...query})
     if (error)
       return res.status(400).json({ error: error.flatten().fieldErrors });
     
-    const expenses = await getExpenseByResident(data)
+    const expenses = await getExpenseByResidence(data)
 
     return res.json(expenses)
+
+  } catch (error) {
+    handleError(res,error)
+  }
+}
+
+export const getPaymentsByResidenceController = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.body.user;
+    const params = req.params
+    const query = req.query
+    const admin = await isAdmin(id);
+    if (!admin) return res.status(403).json("invalid admin");
+    const {data,error} = await insertGetPaymentsByResidence.safeParseAsync({...params,...query})
+    if (error)
+      return res.status(400).json({ error: error.flatten().fieldErrors });
+    
+    const payments = await getPaymentsByResidence(data)
+
+    return res.json(payments)
 
   } catch (error) {
     handleError(res,error)
