@@ -133,7 +133,8 @@ model Role {
 model Expense {
   id               String      @id @default(uuid())
   title            String
-  residence_id     String      
+  residence_id     String 
+  createdAt        DateTime   @default(now())
   emitingDate      DateTime?    @db.Date
   dayPayment       DateTime?    @db.Date
   value            Decimal      @db.Decimal(8, 2)

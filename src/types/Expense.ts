@@ -8,6 +8,7 @@ const baseSchema = ExpenseSchema;
 export const insertExpenseParams = baseSchema
   .omit({
     id: true,
+    createdAt:true
   })
   .extend({
     emitingDate: z.coerce.date().optional(),

@@ -29,6 +29,10 @@ export const getAllExpense = async (data: GetAllExpenses) => {
     },
     skip: (page - 1) * limit,
     take: limit,
+    orderBy: {
+      createdAt: "desc"
+    }
+   
   };
   
   try {

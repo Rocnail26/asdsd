@@ -34,6 +34,9 @@ export const getExpenseByResidence = async ( data:GetExpenseByResidence) => {
         },
         skip: (page - 1 ) * limit,
         take: limit, 
+        orderBy:{
+          createdAt: "desc"
+        }
         }
 
         console.log(query)

@@ -21,7 +21,10 @@ export const getPaymentsByResidence = async ( data:GetPaymentByResidence) => {
            }
         },
         skip: (page - 1 ) * limit,
-        take: limit, 
+        take: limit,
+        orderBy:{
+            
+        } 
         }
 
 
