@@ -4,7 +4,8 @@ import { VehicleSchema } from "../db/zod";
 const baseSchema = VehicleSchema
 
 export const insertVehicleParams = baseSchema.omit({
-    id:true
+    id:true,
+    createdAt:true
 })
 
 export const insertGetVehicle = baseSchema.extend({

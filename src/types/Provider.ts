@@ -6,6 +6,7 @@ const baseSchema = ProviderSchema
 
 export const insertProviderParams = baseSchema.omit({
     id:true,    
+    createdAt:true
 })
 
 export const insertGetAllProviders = baseSchema.pick({

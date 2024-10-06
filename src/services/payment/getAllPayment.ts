@@ -18,8 +18,20 @@ export const getAllPayment = async (data:GetAllPayment) => {
                         owedValue:true,
                         title:true,
                         value:true
+                    },
+                    orderBy:{
+                        createdAt:"desc"
                     }
-                }
+                },
+                Account:{
+                    select:{
+                        accountNumber:true,
+                        title:true
+                    }
+                },
+            },
+            orderBy:{
+                createdAt:"desc"
             }
         })
 

@@ -9,6 +9,9 @@ export const getAllResidences = async (data: GetAllResidence) => {
     where: {
       community_id,
     },
+    orderBy:{
+    createdAt: "desc"   
+    }
   };
 
   if (relations) {
@@ -20,7 +23,11 @@ export const getAllResidences = async (data: GetAllResidence) => {
     query.include = {
       Owner: true,
       Community: true,
-      Expense: true,
+      Expense: {
+        orderBy:{
+          createdAt:"desc"
+        }
+      },
       ResidenceType: true,
       Resident: true,
     };

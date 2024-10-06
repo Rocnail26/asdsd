@@ -5,6 +5,7 @@ const baseSchema = AccountSchema
 
 export const insertAccountParams = baseSchema.omit({
     id:true,
+    createdAt:true
 }).extend({
  balance: z.coerce.number()
 })

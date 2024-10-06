@@ -8,6 +8,9 @@ export const getAllRoles = async() => {
                 id:{
                     not: 1
                 }
+            },
+            orderBy:{
+                createdAt:"desc"
             }
         })
         return roles

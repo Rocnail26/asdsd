@@ -79,27 +79,27 @@ export const TransactionIsolationLevelSchema = z.enum(['ReadUncommitted','ReadCo
 
 export const CommunityScalarFieldEnumSchema = z.enum(['id','title','address']);
 
-export const UserScalarFieldEnumSchema = z.enum(['id','userName','email','password','identification','firstName','lastName','phone','isVerified','isActive','community_id','role_id','residence_id']);
+export const UserScalarFieldEnumSchema = z.enum(['id','userName','email','password','identification','firstName','lastName','phone','isVerified','isActive','community_id','role_id','residence_id','createdAt']);
 
-export const ResidenceScalarFieldEnumSchema = z.enum(['id','title','owner_id','community_id','contacts','residenceType_id']);
+export const ResidenceScalarFieldEnumSchema = z.enum(['id','title','owner_id','community_id','contacts','residenceType_id','createdAt']);
 
-export const ParkingSlotScalarFieldEnumSchema = z.enum(['id','number','user_id','community_id']);
+export const ParkingSlotScalarFieldEnumSchema = z.enum(['id','number','user_id','community_id','createdAt']);
 
-export const ResidenceTypeScalarFieldEnumSchema = z.enum(['id','title','description','community_id']);
+export const ResidenceTypeScalarFieldEnumSchema = z.enum(['id','title','description','community_id','createdAt']);
 
-export const VehicleScalarFieldEnumSchema = z.enum(['id','plate','model','color','user_id']);
+export const VehicleScalarFieldEnumSchema = z.enum(['id','plate','model','color','user_id','createdAt']);
 
-export const ProviderScalarFieldEnumSchema = z.enum(['id','title','contactName','description','phone','email','address','website','active','community_id']);
+export const ProviderScalarFieldEnumSchema = z.enum(['id','title','contactName','description','phone','email','address','website','active','community_id','createdAt']);
 
-export const RoleScalarFieldEnumSchema = z.enum(['id','title','description','modules']);
+export const RoleScalarFieldEnumSchema = z.enum(['id','title','description','modules','createdAt']);
 
 export const ExpenseScalarFieldEnumSchema = z.enum(['id','title','residence_id','createdAt','emitingDate','dayPayment','value','owedValue','payment_id','isRecurrent']);
 
-export const PaymentScalarFieldEnumSchema = z.enum(['id','title','description','registerDate','amount','whoPay','voucherImage','isEmailSend','account_id','created_by','status']);
+export const PaymentScalarFieldEnumSchema = z.enum(['id','title','description','registerDate','amount','whoPay','voucherImage','isEmailSend','account_id','created_by','status','serial','paymentMethod','createdAt']);
 
-export const CashoutScalarFieldEnumSchema = z.enum(['id','title','description','provider_id','amount','billImage','account_id','toAccount_id','status','registerDate']);
+export const CashoutScalarFieldEnumSchema = z.enum(['id','title','description','provider_id','amount','billImage','account_id','toAccount_id','status','registerDate','createdAt']);
 
-export const AccountScalarFieldEnumSchema = z.enum(['id','title','description','active','community_id','balance','image','Responsable','accountNumber','bank']);
+export const AccountScalarFieldEnumSchema = z.enum(['id','title','description','active','community_id','balance','image','Responsable','accountNumber','bank','createdAt']);
 
 export const SortOrderSchema = z.enum(['asc','desc']);
 
@@ -149,6 +149,7 @@ export const UserSchema = z.object({
   community_id: z.string(),
   role_id: z.number().int(),
   residence_id: z.string().nullable(),
+  createdAt: z.coerce.date(),
 })
 
 export type User = z.infer<typeof UserSchema>
@@ -164,6 +165,7 @@ export const ResidenceSchema = z.object({
   community_id: z.string(),
   contacts: JsonValueSchema.nullable(),
   residenceType_id: z.number().int(),
+  createdAt: z.coerce.date(),
 })
 
 export type Residence = z.infer<typeof ResidenceSchema>
@@ -177,6 +179,7 @@ export const ParkingSlotSchema = z.object({
   number: z.number().int(),
   user_id: z.string().nullable(),
   community_id: z.string(),
+  createdAt: z.coerce.date(),
 })
 
 export type ParkingSlot = z.infer<typeof ParkingSlotSchema>
@@ -190,6 +193,7 @@ export const ResidenceTypeSchema = z.object({
   title: z.string(),
   description: z.string(),
   community_id: z.string(),
+  createdAt: z.coerce.date(),
 })
 
 export type ResidenceType = z.infer<typeof ResidenceTypeSchema>
@@ -204,6 +208,7 @@ export const VehicleSchema = z.object({
   model: z.string(),
   color: z.string(),
   user_id: z.string(),
+  createdAt: z.coerce.date(),
 })
 
 export type Vehicle = z.infer<typeof VehicleSchema>
@@ -223,6 +228,7 @@ export const ProviderSchema = z.object({
   website: z.string().nullable(),
   active: z.boolean(),
   community_id: z.string(),
+  createdAt: z.coerce.date(),
 })
 
 export type Provider = z.infer<typeof ProviderSchema>
@@ -236,6 +242,7 @@ export const RoleSchema = z.object({
   title: z.string(),
   description: z.string(),
   modules: z.string(),
+  createdAt: z.coerce.date(),
 })
 
 export type Role = z.infer<typeof RoleSchema>
@@ -275,6 +282,9 @@ export const PaymentSchema = z.object({
   isEmailSend: z.boolean(),
   account_id: z.string(),
   created_by: z.string(),
+  serial: z.number().int().nullable(),
+  paymentMethod: z.string(),
+  createdAt: z.coerce.date(),
 })
 
 export type Payment = z.infer<typeof PaymentSchema>
@@ -294,6 +304,7 @@ export const CashoutSchema = z.object({
   account_id: z.string(),
   toAccount_id: z.string().nullable(),
   registerDate: z.coerce.date(),
+  createdAt: z.coerce.date(),
 })
 
 export type Cashout = z.infer<typeof CashoutSchema>
@@ -313,6 +324,7 @@ export const AccountSchema = z.object({
   Responsable: z.string().nullable(),
   accountNumber: z.string().nullable(),
   bank: z.string().nullable(),
+  createdAt: z.coerce.date(),
 })
 
 export type Account = z.infer<typeof AccountSchema>

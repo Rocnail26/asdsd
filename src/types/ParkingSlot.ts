@@ -4,7 +4,8 @@ import { ParkingSlotSchema } from "../db/zod";
 const baseSchema = ParkingSlotSchema
 
 export const insertParkingSlotParams = baseSchema.omit({
-    id:true
+    id:true,
+    createdAt:true
 })   
 
 export const insertGetAllParkingSlot = baseSchema.extend({

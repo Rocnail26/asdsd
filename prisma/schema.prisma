@@ -45,7 +45,8 @@ model User {
   isActive        Boolean?     @default(false)
   community_id    String       @default("1")
   role_id         Int
-  residence_id    String?     
+  residence_id    String?
+  createdAt       DateTime         @default(now())
 
   Community       Community     @relation(fields: [community_id], references: [id])
   Role            Role?        @relation(fields: [role_id], references: [id])
@@ -63,7 +64,8 @@ model Residence {
   owner_id        String?      
   community_id     String       
   contacts        Json?
-  residenceType_id Int   
+  residenceType_id Int
+  createdAt       DateTime         @default(now())   
 
   Owner           User?       @relation(fields: [owner_id], references: [id])
   Community       Community     @relation(fields: [community_id], references: [id])
@@ -76,7 +78,8 @@ model ParkingSlot {
   id           String     @id @default(uuid())
   number       Int
   user_id      String?
-  community_id String     
+  community_id String   
+  createdAt       DateTime         @default(now())     
 
   User    User?  @relation(fields: [user_id], references: [id])
   Community Community  @relation(fields: [community_id],references:[id])
@@ -89,6 +92,7 @@ model ResidenceType {
   title        String
   description  String
   community_id String
+  createdAt    DateTime         @default(now())   
 
   Residence    Residence[]
   Community    Community     @relation(fields:[community_id],references:[id])
@@ -100,6 +104,7 @@ model Vehicle {
   model     String
   color     String
   user_id   String
+  createdAt       DateTime         @default(now())   
 
   User      User         @relation(fields:[user_id],references:[id])
 }
@@ -114,7 +119,8 @@ model Provider {
   address      String?
   website      String?
   active       Boolean
-  community_id  String       
+  community_id  String
+  createdAt       DateTime         @default(now())          
 
   Community     Community     @relation(fields: [community_id], references: [id])
   Cashout      Cashout[]
@@ -127,14 +133,15 @@ model Role {
   title        String
   description  String
   modules      String
+  createdAt       DateTime         @default(now())  
   User         User[]
 }
 
 model Expense {
-  id               String      @id @default(uuid())
+  id               String       @id @default(uuid())
   title            String
   residence_id     String 
-  createdAt        DateTime   @default(now())
+  createdAt        DateTime     @default(now())
   emitingDate      DateTime?    @db.Date
   dayPayment       DateTime?    @db.Date
   value            Decimal      @db.Decimal(8, 2)
@@ -163,6 +170,10 @@ model Payment {
   account_id      String      
   created_by      String      
   status          StatusPayment
+  serial          Int? 
+  paymentMethod   String      @default("Efectivo")
+  createdAt       DateTime         @default(now())    
+
  
   Expense         Expense[]
   Account         Account     @relation(fields: [account_id], references: [id])
@@ -180,6 +191,7 @@ model Cashout {
   toAccount_id    String?
   status          StatusPayment
   registerDate    DateTime    @db.Date
+  createdAt       DateTime         @default(now())  
 
   Provider        Provider?    @relation(fields: [provider_id], references: [id])
   Account         Account     @relation(fields: [account_id], references: [id])
@@ -199,6 +211,7 @@ model Account {
   Responsable     String?
   accountNumber   String?
   bank            String?
+  createdAt       DateTime         @default(now())  
 
   Community       Community     @relation(fields: [community_id], references: [id])
   Payment         Payment[]

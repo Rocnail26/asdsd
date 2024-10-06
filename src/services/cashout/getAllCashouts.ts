@@ -11,6 +11,9 @@ export const getAllCashouts = async(data: GetAllCashouts) => {
                 Account:{
                     community_id
                 }
+            },
+            orderBy:{
+                createdAt:"desc"
             }
         })
         return cashouts

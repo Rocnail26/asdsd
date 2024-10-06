@@ -9,7 +9,6 @@ export const createProvider = async (data: NewProvider) => {
         const provider = await prisma.provider.create({
             data
         })
-
         return provider
     } catch (error) {
         throw error        

@@ -23,7 +23,14 @@ export const getPaymentsByResidence = async ( data:GetPaymentByResidence) => {
         skip: (page - 1 ) * limit,
         take: limit,
          include:{
-            Expense:true
+            Expense:{
+                orderBy:{
+                    createdAt:"desc"
+                }
+            }
+         },
+         orderBy:{
+            createdAt: "desc"
          }
         }
 

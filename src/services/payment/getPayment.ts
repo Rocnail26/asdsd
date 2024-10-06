@@ -12,7 +12,11 @@ export const getpayment = async (data:GetPayment) => {
             }
         },
         include:{
-            Expense:true,
+            Expense: {
+                orderBy:{
+                    createdAt:"desc"
+                }
+            },
             Account: true,
             Admin:true,
         },

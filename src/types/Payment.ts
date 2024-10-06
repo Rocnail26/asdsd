@@ -6,6 +6,8 @@ const baseSchema = PaymentSchema
 
 export const insertPaymentParams = baseSchema.omit({
     id:true,
+    serial:true,
+    createdAt:true
 }).extend({
     expenses: z.object({
       id: z.string(),

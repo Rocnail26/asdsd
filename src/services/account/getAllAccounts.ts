@@ -8,6 +8,9 @@ export const getAllAccounts = async(data:GetAllAccounts) => {
             const accounts = await prisma.account.findMany({
                 where:{
                     ...data
+                },
+                orderBy:{
+                    createdAt:"desc"
                 }
             })
             return accounts

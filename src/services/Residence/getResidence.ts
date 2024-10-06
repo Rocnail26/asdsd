@@ -4,7 +4,6 @@ import { GetResidence } from "../../types/Residence";
 
 export const getResidence = async(data:GetResidence) => {
 try {
-          
     const residence = await prisma.residence.findUnique({
         where:{
             ...data
@@ -17,17 +16,13 @@ try {
             Resident: true
         },
         omit:{
-           
             owner_id:true,
             residenceType_id: true,
-
         }
     })
-    console.log(residence)
     if(!residence) throw new Error("residencia no encontrada")
     return residence    
 } catch (error) {
     throw error
 }
-
 }

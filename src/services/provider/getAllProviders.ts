@@ -10,6 +10,9 @@ export const getAllProviders = async(data: GetAllProviders) => {
             where:{
                 ...data
             },
+            orderBy:{
+                createdAt:"desc"
+            }
         })
 
         return providers

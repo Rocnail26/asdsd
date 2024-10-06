@@ -5,6 +5,7 @@ const baseSchema  = CashoutSchema
 
 export const insertCashoutSchema = baseSchema.omit({
     id:true,
+    createdAt:true
 }).extend({toAccount_id:z.string().optional()}).refine(({toAccount_id,provider_id}) => {
     if(!toAccount_id && !provider_id) return false
     if(toAccount_id && provider_id) return false

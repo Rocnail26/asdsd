@@ -16,7 +16,8 @@ export const getVehicle = async(data:GetVehicle) => {
             },
             include:{
                 User:true
-            }
+            },
+            
         })
         return vehicle
     } catch (error) {

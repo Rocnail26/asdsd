@@ -12,6 +12,7 @@ export const insertResidenceParams = baseSchema.omit({
     contacts:true,
     id: true,
     owner_id:true,
+    createdAt:true
 })
 
 export const insertGetAllResidenceParams = baseSchema.extend({

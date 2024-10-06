@@ -13,6 +13,9 @@ export const getAllUsers = async(data:GetAllUsers) => {
                 role_id: {
                     not: 1
                 }
+            },
+            orderBy:{
+                createdAt:"desc"
             }
         } 
 

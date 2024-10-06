@@ -9,6 +9,9 @@ export const getAllVehicles = async(data:GetAllVehicles) => {
                 User:{
                     community_id:data.community_id
                 }
+            },
+            orderBy:{
+                createdAt:"desc"
             }
         })
         return vehicles

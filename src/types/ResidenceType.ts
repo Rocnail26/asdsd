@@ -7,6 +7,7 @@ const baseSchema = ResidenceTypeSchema
 
 export const insertResidenceTypeParams = baseSchema.omit({
 id:true,
+createdAt:true
 })
 
 export const insertEditResidenceTypeParams = baseSchema.extend({

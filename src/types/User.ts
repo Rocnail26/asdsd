@@ -10,6 +10,7 @@ export const insertUserParams = baseSchema.omit({
     id:true,
     isActive:true,
     isVerified:true,
+    createdAt:true
 }).omit({
     password:true,
 }).extend({

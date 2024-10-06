@@ -6,6 +6,9 @@ export const getAllParkingSlot = async(data:GetAllParkingSlot) => {
         const parkingSlots = await prisma.parkingSlot.findMany({
             where:{
                 ...data
+            },
+            orderBy:{
+                createdAt:"desc"
             }
         })
         return parkingSlots
