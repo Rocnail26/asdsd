@@ -22,6 +22,7 @@ model Community {
   id              String       @id @default(uuid())
   title           String
   address         String
+  initSerialNumber Int         @default(0)  
 
   Residence       Residence[]
   Provider        Provider[]

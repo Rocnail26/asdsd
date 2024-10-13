@@ -17,7 +17,13 @@ export const getAllPayment = async (data:GetAllPayment) => {
                     select:{
                         owedValue:true,
                         title:true,
-                        value:true
+                        value:true,
+                        Residence:{
+                            select:{
+                                title:true,
+                                id:true
+                            }
+                        }
                     },
                     orderBy:{
                         createdAt:"desc"

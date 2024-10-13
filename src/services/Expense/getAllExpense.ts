@@ -31,6 +31,14 @@ export const getAllExpense = async (data: GetAllExpenses) => {
     take: limit,
     orderBy: {
       createdAt: "desc"
+    },
+    include:{
+      Residence: {
+        select: {
+          id:true,
+          title:true,
+        }
+      }
     }
    
   };

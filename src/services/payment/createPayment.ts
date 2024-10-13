@@ -18,7 +18,6 @@ export const createPayment = async(data: NewPayment) => {
                 }
              }
         })
-        console.log("ssss")
         if(payment.status == "Paid"){
           await  prisma.account.update({
                 where: {

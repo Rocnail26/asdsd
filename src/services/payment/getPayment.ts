@@ -15,7 +15,16 @@ export const getpayment = async (data:GetPayment) => {
             Expense: {
                 orderBy:{
                     createdAt:"desc"
+                },
+                include:{
+                    Residence:{
+                        select: {
+                            title:true,
+                            id:true
+                        }
+                    }
                 }
+                
             },
             Account: true,
             Admin:true,

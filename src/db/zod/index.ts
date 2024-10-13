@@ -77,7 +77,7 @@ export const isValidDecimalInput =
 
 export const TransactionIsolationLevelSchema = z.enum(['ReadUncommitted','ReadCommitted','RepeatableRead','Serializable']);
 
-export const CommunityScalarFieldEnumSchema = z.enum(['id','title','address']);
+export const CommunityScalarFieldEnumSchema = z.enum(['id','title','address','initSerialNumber']);
 
 export const UserScalarFieldEnumSchema = z.enum(['id','userName','email','password','identification','firstName','lastName','phone','isVerified','isActive','community_id','role_id','residence_id','createdAt']);
 
@@ -127,6 +127,7 @@ export const CommunitySchema = z.object({
   id: z.string(),
   title: z.string(),
   address: z.string(),
+  initSerialNumber: z.number().int(),
 })
 
 export type Community = z.infer<typeof CommunitySchema>

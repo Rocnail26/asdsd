@@ -10,6 +10,14 @@ export const getExpense = async(data: GetExpense) => {
                 Residence:{
                     community_id: data.community_id
                 }
+            },
+            include:{
+                Residence:{
+                    select:{
+                        id:true,
+                        title:true
+                    }
+                }
             }
         })
         return expense

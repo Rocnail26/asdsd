@@ -11,6 +11,7 @@ import paymentRouter from "./payment/route"
 import cashoutRouter from "./cashout/route"
 import vehicleRouter from "./vehicle/route"
 import parkingSlotRouter from "./parkingSlot/route"
+import communityRouter from "./community/route"
 
 const mainRouter = Router()
 
@@ -26,5 +27,6 @@ mainRouter.use("/payment",paymentRouter)
 mainRouter.use("/cashout",cashoutRouter)
 mainRouter.use("/vehicle", vehicleRouter)
 mainRouter.use("/parkingslot",parkingSlotRouter)
+mainRouter.use("/community",communityRouter)
 
 export default mainRouter 
