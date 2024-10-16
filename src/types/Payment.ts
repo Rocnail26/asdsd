@@ -39,6 +39,7 @@ export const insertEditPayment = baseSchema.pick({
     isEmailSend:true,
     status:true,
     voucherImage:true,
+    title:true
 }).partial().extend({
     id:z.string(),
     community_id: z.string(),
