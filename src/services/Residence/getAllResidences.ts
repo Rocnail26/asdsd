@@ -21,15 +21,18 @@ export const getAllResidences = async (data: GetAllResidence) => {
       residenceType_id: true,
     }
     query.include = {
-      Owner: true,
-      Community: true,
-      Expense: {
-        orderBy:{
-          createdAt:"desc"
+      Owner: {
+        select:{
+          phone:true,
+          firstName:true,
         }
       },
-      ResidenceType: true,
-      Resident: true,
+      ResidenceType: {
+        select:{
+          title:true,
+          description:true
+        }
+      },
     };
   
   }
