@@ -33,6 +33,16 @@ export const getAllResidences = async (data: GetAllResidence) => {
           description:true
         }
       },
+      Resident:{
+        select:{
+          firstName:true,
+          phone:true,
+        },
+        take: 1,
+        orderBy:{
+          createdAt: "desc"
+        }
+      }
     };
   
   }
