@@ -40,6 +40,19 @@ export const insertGetUser = baseSchema.pick({
     id: true
 })
 
+export const insertEditUser = baseSchema.pick({
+    email:true,
+   lastName:true,
+    role_id:true,
+    phone:true,
+    userName:true,
+    residence_id:true,
+    firstName:true,
+    identification:true
+}).partial().extend({
+    id:z.string(),
+    community_id: z.string()
+})
 
 
 
@@ -49,3 +62,4 @@ export type ActivateUser = z.infer<typeof insertActivateUser>
 export type User = z.infer<typeof baseSchema>
 export type GetAllUsers = z.infer<typeof insertGetAllUsers>
 export type getUsers = z.infer<typeof insertGetUser>
+export type EditUser = z.infer<typeof insertEditUser>
