@@ -1,6 +1,6 @@
 import {Router} from "express"
 import { validateJWT } from "../middleware/validateJWT"
-import { getAlluserController, getUserController } from "./controller"
+import { editUserController, getAlluserController, getUserController } from "./controller"
 import { JsonWebTokenError } from "jsonwebtoken"
 import { editUser } from "../../services/user/editUser"
 
@@ -14,6 +14,6 @@ userRoute.route("/")
 userRoute.route("/:id")
 .all(validateJWT)
 .get(getUserController)
-.put(editUser)
+.put(editUserController)
 
 export default userRoute

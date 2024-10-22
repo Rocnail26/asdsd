@@ -47,7 +47,7 @@ export const editUserController = async(req:Request,res:Response) => {
     try {
         const {id,community_id} = req.body.user
         const body = req.body
-        const {userId} = req.params
+        const {id:userId} = req.params
         const isValidAdmin = await isAdmin(id)
         if(!isValidAdmin) return res.status(403).json({error:"invalid user"})
         const {data,error} = await insertEditUser.safeParseAsync({ ...body ,community_id, id:userId})
