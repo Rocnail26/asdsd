@@ -42,7 +42,7 @@ export const insertGetUser = baseSchema.pick({
 
 export const insertEditUser = baseSchema.pick({
     email:true,
-   lastName:true,
+    lastName:true,
     role_id:true,
     phone:true,
     userName:true,

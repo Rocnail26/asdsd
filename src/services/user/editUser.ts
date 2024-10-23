@@ -25,7 +25,7 @@ export const editUser = async(data:EditUser) => {
                 id
             },
             omit:{
-                password,     
+                password:true,     
             }
         })
         return user
