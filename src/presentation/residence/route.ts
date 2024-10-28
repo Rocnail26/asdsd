@@ -6,6 +6,7 @@ import {
   getExpensesByResidentController,
   getPaymentsByResidenceController,
   getResidenceController,
+  updateResidenceController,
 } from "./controller";
 const residenceRouter = Router();
 
@@ -15,7 +16,10 @@ residenceRouter
   .post(createResidenceController)
   .get(getAllRecidencesController);
 
-residenceRouter.route("/:id").all(validateJWT).get(getResidenceController);
+residenceRouter.route("/:id")
+.all(validateJWT)
+.get(getResidenceController)
+.put(updateResidenceController)
 
 residenceRouter
   .route("/:id/expense")

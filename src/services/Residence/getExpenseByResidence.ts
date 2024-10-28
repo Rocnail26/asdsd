@@ -38,9 +38,6 @@ export const getExpenseByResidence = async ( data:GetExpenseByResidence) => {
           createdAt: "desc"
         }
         }
-
-        console.log(query)
-
     try {
        return await prisma.expense.findMany(query)
     } catch (error) {

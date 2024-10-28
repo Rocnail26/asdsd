@@ -4,7 +4,6 @@ import { GetAllExpenses } from "../../types/Expense";
 
 export const getAllExpense = async (data: GetAllExpenses) => {
   const { from, to, limit, page, community_id } = data;
-  console.log(limit,page)
   const query: Prisma.ExpenseFindManyArgs = {
     where: {
       Residence:{

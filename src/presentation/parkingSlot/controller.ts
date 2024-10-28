@@ -41,7 +41,6 @@ export const createParkingSlotController = async (
 
 export const getParkingSlotController = async (req: Request, res: Response) => {
   try {
-    console.log(req.body.user)
     const { id, community_id } = req.body.user;
     const params = req.params;
     const admin = await isAdmin(id);

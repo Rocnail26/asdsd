@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { isAdmin } from "../../services/user";
 import {
+  insertEditResidence,
   insertGetAllResidenceParams,
   insertGetExpenseByResidence,
   insertGetPaymentsByResidence,
@@ -9,6 +10,8 @@ import {
 } from "../../types/Residence";
 import { createResidence, getAllResidences, getExpenseByResidence, getResidence ,getPaymentsByResidence} from "../../services/Residence";
 import { handleError } from "../../utils/handleError";
+import { existNameResidence } from "../../services/Residence/existNameResidence";
+import { editResidence } from "../../services/Residence/editResidence";
 
 
 export const createResidenceController = async (
@@ -24,8 +27,10 @@ export const createResidenceController = async (
       ...body,
       community_id,
     });
-    if (error)
+    if (error) 
       return res.status(400).json({ error: error.flatten().fieldErrors });
+    const existTitle = await existNameResidence(data)
+    if(existTitle) return res.status(400).json({error:"este nombre de residencia ya existe"})
     const residence = await createResidence(data);
     return res.status(202).json(residence);
   } catch (error) {
@@ -42,7 +47,7 @@ export const getAllRecidencesController = async (req: Request, res: Response) =>
     const { relations } = req.query;
     const admin = await isAdmin(id);
     if (!admin) return res.status(403).json("invalid admin");
-    console.log(relations);
+   
     const { data, error } = await insertGetAllResidenceParams.safeParseAsync({
       community_id,
       relations,
@@ -66,7 +71,6 @@ export const getResidenceController = async (req: Request, res: Response) => {
     const {data,error} = await insertGetResidenceParams.safeParseAsync({community_id,id})
     if(error) return res.status(400).json({error: error.flatten().fieldErrors})
     const residence = await getResidence(data)
-  console.log(residence)
     return res.json(residence)
   } catch (error) {
     if (error instanceof Error)
@@ -112,6 +116,31 @@ export const getPaymentsByResidenceController = async (req: Request, res: Respon
 
     return res.json(payments)
 
+  } catch (error) {
+    handleError(res,error)
+  }
+}
+
+export const updateResidenceController = async (req:Request,res:Response) => {
+  try {
+    const { id:userId, community_id } = req.body.user;
+    const body = req.body;
+    const {id} = req.params
+    const admin = await isAdmin(userId);
+    if (!admin) return res.status(403).json("invalid admin");
+    const { data, error } = await insertEditResidence.safeParseAsync({
+      ...body,
+      id,
+      community_id,
+    });
+    if (error) 
+      return res.status(400).json({ error: error.flatten().fieldErrors });
+    if(data.title){
+      const existTitle = await existNameResidence({title:data.title,community_id})
+      if(existTitle) return res.status(400).json({error:"este nombre de residencia ya existe"})
+    }
+    const residence = await editResidence(data)
+    return res.json(residence)
   } catch (error) {
     handleError(res,error)
   }

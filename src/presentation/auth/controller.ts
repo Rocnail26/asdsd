@@ -19,7 +19,7 @@ export const registerUserController = async (req: Request, res: Response) => {
 
       
     let newUser = await registerUser(data!);
-    console.log(data)
+   
     // enviar correo aqui
 
     const payload = {id:newUser.id}
